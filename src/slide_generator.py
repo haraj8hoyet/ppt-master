@@ -29,13 +29,20 @@ def _build_prompt(topic: str, num_slides: int) -> str:
 
 
 def generate_outline(topic: str, num_slides: int | None = None) -> list[Slide]:
-    """Call the LLM and return a list of Slide objects."""
+    """Call the LLM and return a list of Slide objects.
+
+    Args:
+        topic: The subject matter for the presentation.
+        num_slides: Desired number of slides. Defaults to 5 if not specified
+                    (overriding upstream default of 10, which felt too long).
+    """
     cfg = get_config()
     errors = cfg.validate()
     if errors:
         raise ValueError("Invalid configuration: " + "; ".join(errors))
 
-    slides_count = min(num_slides or 10, cfg.max_slides)
+    # Personal preference: default to 5 slides instead of 10
+    slides_count = min(num_slides or 5, cfg.max_slides)
     client = OpenAI(api_key=cfg.openai_api_key, base_url=cfg.openai_base_url)
 
     logger.info("Generating %d slides for topic: %s", slides_count, topic)
