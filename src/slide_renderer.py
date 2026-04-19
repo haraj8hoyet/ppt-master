@@ -16,6 +16,7 @@ class RenderedSlide:
         for bullet in self.bullets:
             lines.append(f"- {bullet}")
         if self.speaker_notes:
+            # Notes are separated by a blank line for readability
             lines.append(f"\n> Notes: {self.speaker_notes}")
         return "\n".join(lines)
 
@@ -36,7 +37,11 @@ def render_outline(slides: List[Slide]) -> List[RenderedSlide]:
 
 
 def outline_to_markdown(slides: List[Slide]) -> str:
-    """Convert a slide outline to a full markdown document."""
+    """Convert a slide outline to a full markdown document.
+
+    Slides are separated by two newlines for clean rendering in most
+    markdown viewers (e.g. VS Code, GitHub).
+    """
     rendered = render_outline(slides)
     sections = [r.to_markdown() for r in rendered]
     return "\n\n".join(sections)
