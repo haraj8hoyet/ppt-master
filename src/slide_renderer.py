@@ -28,6 +28,8 @@ def render_slide(slide: Slide, index: int) -> RenderedSlide:
         index=index,
         title=slide.title,
         bullets=bullets,
+        # Carry over speaker notes if the Slide object has them
+        speaker_notes=getattr(slide, "speaker_notes", ""),
     )
 
 
