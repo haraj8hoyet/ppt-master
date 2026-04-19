@@ -45,7 +45,8 @@ def generate_outline(topic: str, num_slides: int | None = None) -> list[Slide]:
             {"role": "system", "content": "You are a professional presentation designer."},
             {"role": "user", "content": _build_prompt(topic, slides_count)},
         ],
-        temperature=0.7,
+        # Lowered temperature slightly for more consistent, structured JSON output
+        temperature=0.5,
     )
 
     raw = response.choices[0].message.content or "[]"
