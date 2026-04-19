@@ -32,6 +32,11 @@ class TestBuildPrompt:
         prompt = _build_prompt("AI", 7)
         assert "7" in prompt
 
+    # Personal note: also verify the prompt is a non-empty string
+    def test_returns_string(self):
+        prompt = _build_prompt("Data Science", 3)
+        assert isinstance(prompt, str) and len(prompt) > 0
+
 
 class TestGenerateOutline:
     @patch("src.slide_generator.OpenAI")
@@ -52,6 +57,24 @@ class TestGenerateOutline:
         assert isinstance(slides[0], Slide)
         assert slides[0].title == "Intro"
         assert slides[1].bullets == ["Detail 1"]
+
+    @patch("src.slide_generator.OpenAI")
+    @patch("src.slide_generator.get_config")
+    def test_speaker_notes_preserved(self, mock_cfg, mock_openai_cls):
+        """Check that speaker_notes are correctly mapped onto the Slide objects."""
+        cfg = MagicMock()
+        cfg.validate.return_value = []
+        cfg.openai_api_key = "test-key"
+        cfg.openai_base_url = "https://api.openai.com/v1"
+        cfg.openai_model = "gpt-4o"
+        cfg.max_slides = 20
+        mock_cfg.return_value = cfg
+        mock_openai_cls.return_value = _mock_openai(json.dumps(SAMPLE_SLIDES))
+
+        slides = generate_outline("Python", num_slides=2)
+
+        assert slides[0].speaker_notes == "Welcome!"
+        assert slides[1].speaker_notes == ""
 
     @patch("src.slide_generator.get_config")
     def test_raises_on_invalid_config(self, mock_cfg):
