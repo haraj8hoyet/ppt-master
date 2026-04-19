@@ -10,10 +10,10 @@ load_dotenv()
 @dataclass
 class Config:
     openai_api_key: str = field(default_factory=lambda: os.getenv("OPENAI_API_KEY", ""))
-    openai_model: str = field(default_factory=lambda: os.getenv("OPENAI_MODEL", "gpt-4o"))
+    openai_model: str = field(default_factory=lambda: os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
     openai_base_url: str = field(default_factory=lambda: os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1"))
-    max_slides: int = field(default_factory=lambda: int(os.getenv("MAX_SLIDES", "20")))
-    default_theme: str = field(default_factory=lambda: os.getenv("DEFAULT_THEME", "default"))
+    max_slides: int = field(default_factory=lambda: int(os.getenv("MAX_SLIDES", "15")))
+    default_theme: str = field(default_factory=lambda: os.getenv("DEFAULT_THEME", "dark"))
     output_dir: str = field(default_factory=lambda: os.getenv("OUTPUT_DIR", "output"))
     log_level: str = field(default_factory=lambda: os.getenv("LOG_LEVEL", "INFO"))
 
