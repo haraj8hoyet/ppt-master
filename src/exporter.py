@@ -19,7 +19,8 @@ def export_html(slides: List[Slide], output_path: str) -> Path:
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     rendered = render_outline(slides)
-    html_parts = ["<html><body>"]
+    # Added basic styling so the output is easier to read in a browser
+    html_parts = ["<html><head><style>body { font-family: sans-serif; max-width: 800px; margin: 40px auto; } section { border-bottom: 1px solid #ccc; padding-bottom: 1em; margin-bottom: 1em; }</style></head><body>"]
     for slide in rendered:
         html_parts.append(f"<section>")
         html_parts.append(f"<h2>Slide {slide.index}: {slide.title}</h2>")
