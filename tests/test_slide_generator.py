@@ -37,6 +37,12 @@ class TestBuildPrompt:
         prompt = _build_prompt("Data Science", 3)
         assert isinstance(prompt, str) and len(prompt) > 0
 
+    # Personal note: edge case I want to keep an eye on - single slide outline
+    def test_single_slide(self):
+        prompt = _build_prompt("Quick Overview", 1)
+        assert "1" in prompt
+        assert "Quick Overview" in prompt
+
 
 class TestGenerateOutline:
     @patch("src.slide_generator.OpenAI")
@@ -83,4 +89,4 @@ class TestGenerateOutline:
         mock_cfg.return_value = cfg
 
         with pytest.raises(ValueError, match="Invalid configuration"):
-            generate_outline("topic")
+            generate_outline("topic", num_slides=3)
