@@ -41,9 +41,11 @@ def render_outline(slides: List[Slide]) -> List[RenderedSlide]:
 def outline_to_markdown(slides: List[Slide]) -> str:
     """Convert a slide outline to a full markdown document.
 
-    Slides are separated by two newlines for clean rendering in most
-    markdown viewers (e.g. VS Code, GitHub).
+    Slides are separated by a horizontal rule so they're easier to distinguish
+    when previewing in VS Code or pasting into a doc. Previously used two
+    newlines but I found the divider much cleaner for longer decks.
     """
     rendered = render_outline(slides)
     sections = [r.to_markdown() for r in rendered]
-    return "\n\n".join(sections)
+    # Use HR separator instead of just double newline for clearer slide boundaries
+    return "\n\n---\n\n".join(sections)
