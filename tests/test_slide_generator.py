@@ -43,6 +43,12 @@ class TestBuildPrompt:
         assert "1" in prompt
         assert "Quick Overview" in prompt
 
+    # Personal note: make sure very long topic names don't silently get truncated
+    def test_long_topic_name_preserved(self):
+        long_topic = "Introduction to Distributed Systems and Cloud-Native Architecture"
+        prompt = _build_prompt(long_topic, 4)
+        assert long_topic in prompt
+
 
 class TestGenerateOutline:
     @patch("src.slide_generator.OpenAI")
@@ -84,9 +90,4 @@ class TestGenerateOutline:
 
     @patch("src.slide_generator.get_config")
     def test_raises_on_invalid_config(self, mock_cfg):
-        cfg = MagicMock()
-        cfg.validate.return_value = ["OPENAI_API_KEY is required but not set."]
-        mock_cfg.return_value = cfg
-
-        with pytest.raises(ValueError, match="Invalid configuration"):
-            generate_outline("topic", num_slides=3)
+        c
