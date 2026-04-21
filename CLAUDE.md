@@ -53,7 +53,6 @@ python3 skills/ppt-master/scripts/svg_to_pptx.py <project_path> -s final
 
 - I primarily use this for work presentations; my default aspect ratio is `ppt169` (16:9).
 - Prefer `--only native` when exporting — the legacy SVG version is rarely needed for my use case.
-
-## SVG Technical Constraints (Non-negotiable)
-
-**Banned features**: `mask` | `<style>` | `class` | external CSS | `<foreignObject>` | `textPath` | `@font-face` | `<animate*>` | `<script>` | `<if
+- Projects are typically named with a date prefix for easy sorting, e.g. `2025-07_topic_name`.
+- When importing sources, always use `--move` to keep the workspace tidy.
+- My go-to template is `business_light`; avoid dark templates unless the brief specifically calls for it.
